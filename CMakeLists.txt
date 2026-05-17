@@ -1,18 +1,26 @@
 cmake_minimum_required(VERSION 3.22)
-project(tile_robot_database)
+
+project(tile_robot_database LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(libpqxx)
 
-set(PostgreSQL_INCLUDE_DIRS build/libpqxx/include)
-
-include_directories(
-  ${CMAKE_SOURCE_DIR}/include
-  ${PostgreSQL_INCLUDE_DIRS}
+add_library(${PROJECT_NAME}
+  src/DatabaseManager.cpp
 )
 
-add_library( ${PROJECT_NAME}
-    src/DatabaseManager.cpp
+target_include_directories(${PROJECT_NAME}
+  PUBLIC
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/libpqxx/include
+)
+
+target_link_libraries(${PROJECT_NAME}
+  PUBLIC
+    pqxx
 )
 
 add_executable(main src/main.cpp)
-target_link_libraries(main ${PROJECT_NAME} pqxx)
+target_link_libraries(main PRIVATE ${PROJECT_NAME})
