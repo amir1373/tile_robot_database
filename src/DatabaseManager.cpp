@@ -115,8 +115,7 @@ string PostgresDriver::get_language_settings()
     {
         pqxx::nontransaction non_tran(db_connection);
         pqxx::result result_id(non_tran.exec(const_cast<char*>(query.c_str())));
-        pqxx::result::const_iterator c = result_id.begin();
-        return c[0].as<string>();
+        return result_id[0][0].as<string>();
     }
     catch(const pqxx::undefined_table& e)
     {
@@ -173,8 +172,7 @@ int PostgresDriver::insert_tile_layout(const string &style, const int &move_id)
     {
         pqxx::nontransaction non_tran(db_connection);
         pqxx::result result_id(non_tran.exec(const_cast<char*>(query_id.c_str())));
-        pqxx::result::const_iterator c = result_id.begin();
-        return c[0].as<int>();
+        return result_id[0][0].as<int>();
     }
     catch (const pqxx::undefined_table &e)
     {
@@ -191,8 +189,7 @@ string PostgresDriver::get_tile_layout(const int &move_id)
         string query = "SELECT style FROM tile_layout WHERE move_id =  " + to_string(move_id) + ";";
         pqxx::nontransaction non_tran(db_connection);
         pqxx::result result_id(non_tran.exec(const_cast<char*>(query.c_str())));
-        pqxx::result::const_iterator c = result_id.begin();
-        return c[0].as<string>();
+        return result_id[0][0].as<string>();
     }
     catch(const pqxx::undefined_table &e)
     {
