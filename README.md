@@ -1,34 +1,30 @@
-# tile_robot_database
+# Tile Robot Database
 
-this is just a database for the tile robot!
+C++/CMake support repository for the tile robot UI/database workflow.
 
-to install libpqxx see [this link](https://github.com/jtv/libpqxx)
+## What This Repository Contains
 
-## build
+- `src/` - C++ source files.
+- `include/` - headers.
+- `CMakeLists.txt` - CMake build configuration.
+- `builder.bash` - build helper script.
+- `docker-compose.yml` - containerized service configuration.
+- `.github/workflows/cmake.yml` - CMake CI workflow.
+- `.gitmodules` - submodule references, if used by the project.
 
-Before building, you must clone the libpqxx repository. this is necessary.
+## Build
 
-``` git submodule init && git submodule update ```
+```bash
+cmake -S . -B build
+cmake --build build
+```
 
-to compile this code run the builder script:
+or use the project helper script if it matches your environment:
 
-```./builder.bash```
+```bash
+bash builder.bash
+```
 
-or
+## Notes
 
-``` bash builder.bash ```
-
-## Run
-
-To run this goes into the build folder and run the main exec file like this:
-
-``` ./main $DB_NAME $USERNAME $PASSWORD $HOST $PORT ```
-
-### Docker Compose
-
-you can use postgres in docker, not in your host!
-for this, go into root of repository and run this:
-
-``` docker compose up ```
-
-Note: before that you must install docker and docker-compose
+Document the expected database/service role, ports, schemas, and UI integration path as this repository is cleaned up.
